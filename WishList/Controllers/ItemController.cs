@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using WishList.Data;
+using WishList.Models;
 
 namespace WishList.Controllers
 {
+    [Route("/api/items")]
     public class ItemController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -13,33 +15,70 @@ namespace WishList.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        [HttpGet("{id}", Name = "GetItem")]
+        public IActionResult GetById(int id)
         {
-            var model = _context.Items.ToList();
-
-            return View("Index", model);
+            return Ok(_context.Items.Find(id));
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult GetAll()
         {
-            return View("Create");
+            return Ok(_context.Items.ToList());
         }
 
         [HttpPost]
-        public IActionResult Create(Models.Item item)
+        public IActionResult Create([FromBody]Item item)
         {
             _context.Items.Add(item);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return CreatedAtRoute("GetItem", new { id = item.Id }, item);
         }
 
+        [HttpPut]
+        public IActionResult Update(int id, Item wishListItem)
+        {
+            var item = _context.Items.Find(id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+
+            item = wishListItem;
+
+            _context.Items.Update(item);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpPatch]
+        public IActionResult UpdateDescription(int id, string description)
+        {
+            var item = _context.Items.Find(id);
+            if(item == null)
+            {
+                return NotFound();
+            }
+
+            item.Description = description;
+
+            _context.Items.Update(item);
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var item = _context.Items.FirstOrDefault(e => e.Id == id);
+            var item = _context.Items.Find(id);
+            if (item == null)
+            {
+                return NotFound();
+            }
+
             _context.Items.Remove(item);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return NoContent();
         }
     }
 }

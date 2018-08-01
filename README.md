@@ -1,6 +1,6 @@
-# ASP.NET Core WishList Application
+# ASP.NET Core StarChart Application
 
-The ASP.NET Core WishList Application is designed to allow users to create their own wishlists, and other users to mark that they are buying those items in such a way the owner of the wish list isn't able to see, while other users are able to see. This application is designed using the Model View Controller design pattern.
+The ASP.NET Core StarChart Application is designed to allow users to create their own StarCharts, and other users to mark that they are buying those items in such a way the owner of the wish list isn't able to see, while other users are able to see. This application is designed using the Model View Controller design pattern.
 
 Note: This project is the second in a series of four projects, this project will cover taking an existing ASP.NET Core web application and changing it from only supporting one user to being able to support many users with authentication and basic security.
 
@@ -20,32 +20,32 @@ If you want to use Visual Studio (highly recommended) follow the following steps
 ## If you don't plan to use Visual studio
 If you would rather use something other than Visual Studio
 -   Install the .Net Core SDK from https://www.microsoft.com/net/download/core once that installation completes you're ready to roll!
--   To run the application go into the WishList project folder and type `dotnet run`
--   To run the tests go into the WishListTests project folder and type `dotnet test`
+-   To run the application go into the StarChart project folder and type `dotnet run`
+-   To run the tests go into the StarChartTests project folder and type `dotnet test`
 
 # Features you will implement
 
 - Add support for user authentication
 - Create functionality for creating and logging in
-- Expand Wishlist functionality to support multiple users
+- Expand StarChart functionality to support multiple users
 - Implement several basic security practices (validation tokens, user verification, authentication, etc)
 
 ## Tasks necessary to complete implementation:
 
 __Note:__ this isn't the only way to accomplish this, however; this is what the project's tests are expecting. Implementing this in a different way will likely result in being marked as incomplete / incorrect.
 
-- [ ] Adding Authentication to our existing ASP.NET Core wishlist app
+- [ ] Adding Authentication to our existing ASP.NET Core StarChart app
 	- [ ] Configure Authentication
 		- Note : We created the model `ApplicationUser` that inherits `IdentityUser` for you! (This was done to allow us to more accurately test your code through out this project)
-		- [ ] Replace `ApplicationDbContext`'s inheritance of `DbContext` to `IdentityDbContext<ApplicationUser>` (you will need to add `using` directives for `Microsoft.AspNetCore.Identity.EntityFrameworkCore` and `using WishList.Models`)
-		- [ ] In `Startup.cs`'s `ConfigureServices` method call `AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();` on `services` (you will need to add `using` directives for `Microsoft.AspNetCore.Identity` and `using WishList.Models`)
+		- [ ] Replace `ApplicationDbContext`'s inheritance of `DbContext` to `IdentityDbContext<ApplicationUser>` (you will need to add `using` directives for `Microsoft.AspNetCore.Identity.EntityFrameworkCore` and `using StarChart.Models`)
+		- [ ] In `Startup.cs`'s `ConfigureServices` method call `AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();` on `services` (you will need to add `using` directives for `Microsoft.AspNetCore.Identity` and `using StarChart.Models`)
 		- [ ] In `Startup.cs`'s `Configure` method Before `app.UseMvcWithDefaultRoute();` call `UseAuthentication` on `app`.
 	- [ ] Create `AccountController`
 		- [ ] Create new controller `AccountController` in the `Controllers` folder
 			- The `AccountController` class should have the `Authorize` attribute (you will need a `using` directive for `Microsoft.AspNetCore.Authorization`)
 			- The `AccountController` should inherit the `Controller` class (you will need a `using` directive for `Microsoft.AspNetCore.Mvc`)
 		- [ ] Create private fields in the `AccountController` class
-			- This should have a private readonly field of type `UserManager<ApplicationUser>` named `_userManager` (you will need a `using` directives for `WishList.Models` and `Microsoft.AspNetCore.Identity`)
+			- This should have a private readonly field of type `UserManager<ApplicationUser>` named `_userManager` (you will need a `using` directives for `StarChart.Models` and `Microsoft.AspNetCore.Identity`)
 			- This should have a private readonly field of type `SignInManager<ApplicationUser>` named `_signInManager`
 		- [ ] Create a constructor in the `AccountController` class
 			- This constructor should accept two parameters, the first of type `UserManager<ApplicationUser>`, the second of type `signInManager<ApplicationUser>`
@@ -65,7 +65,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
 				- `ConfirmPassword` should have the `Compare` attribute with "Password"
 		- [ ] Create the Register View
 			- Inside the `Views/Account` folder add a new view `Register` (you will need to create the `Account` folder)
-			- `Register.cshtml` should have a model of `RegisterViewModel` (You will need to include the namespace, `WishList.Models.AccountViewModels.RegisterViewModel`)
+			- `Register.cshtml` should have a model of `RegisterViewModel` (You will need to include the namespace, `StarChart.Models.AccountViewModels.RegisterViewModel`)
 			- Add the following HTML to the view (we're providing this to save you from needing to type it all yourself)
 				```
 				<h3>Register New User</h3>
@@ -101,7 +101,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
 		- [ ] Create an `HttpPost` action `Register` in the `AccountController` class
 			- This action should have the `HttpPost` attribute
 			- This action should have the `AllowAnonymous` attribute
-			- This action should accept a parameter of type `RegisterViewModel`  (you will need to add a `using` directive for `WishList.Models.AccountViewModels`) 
+			- This action should accept a parameter of type `RegisterViewModel`  (you will need to add a `using` directive for `StarChart.Models.AccountViewModels`) 
 			- This action should return a `RedirectToAction` to `HomeController.Index`
 		- [ ] Update the `HttpPost` `Register` action to check if the `ModelState` is valid
 				- If not return the `Register` view with the model provided in the parameter as it's model
@@ -119,7 +119,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
 		- [ ] Create a `Login.cshtml` view in the `Views/Account` folder
 			- Add the following HTML to the `Login` view
 				```
-				@model WishList.Models.AccountViewModels.LoginViewModel
+				@model StarChart.Models.AccountViewModels.LoginViewModel
 				<h2>Log in</h2>
 				<form asp-action="Login" method="post">
 					<div asp-validation-summary="All" class="text-danger"></div>
@@ -162,7 +162,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
 			- This action should use `SignInManager`'s `SignOutAsync` method
 			- This should return a `RedirectToAction` to the `Home.Index` action
 	- [ ] Add Links to Index View
-		- [ ] Add `using` directives for `Microsoft.AspNetCore.Identity` and `WishList.Models` to the top of `Index.cshtml`
+		- [ ] Add `using` directives for `Microsoft.AspNetCore.Identity` and `StarChart.Models` to the top of `Index.cshtml`
 		- [ ] Add an `inject` directive for `SignInManager<ApplicationUser>` with the name `SignInManager` after the `using` directives
 		- [ ] Check if the user is signed in using the injected `SignInManager`'s `IsSignedIn` method (provide `User` as the arguement)
 			- If `IsSignedIn` returns `true` provide the following HTML

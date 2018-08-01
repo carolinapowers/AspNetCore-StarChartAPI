@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WishList\WishList.csproj" />
+    <ProjectReference Include="..\StarChart\StartChart.csproj" />
   </ItemGroup>
 
 </Project>

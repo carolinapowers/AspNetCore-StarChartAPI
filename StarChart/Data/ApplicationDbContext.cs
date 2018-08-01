@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using StarChart.Models;
 
-namespace WishList.Data
+namespace StarChart.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -8,6 +9,6 @@ namespace WishList.Data
         {
         }
 
-        public DbSet<Models.Item> Items { get; set; }
+        public DbSet<CelestialObject> CelestialObjects { get; set; }
     }
 }

@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using WishList.Data;
+using StarChart.Data;
 
-namespace WishList
+namespace StarChart
 {
     public class Startup
     {

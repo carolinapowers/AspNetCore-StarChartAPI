@@ -5,8 +5,9 @@ using WishList.Models;
 
 namespace WishList.Controllers
 {
-    [Route("/api/items")]
-    public class ItemController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ItemController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
@@ -35,7 +36,7 @@ namespace WishList.Controllers
             return CreatedAtRoute("GetItem", new { id = item.Id }, item);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Update(int id, Item wishListItem)
         {
             var item = _context.Items.Find(id);
@@ -51,7 +52,7 @@ namespace WishList.Controllers
             return NoContent();
         }
 
-        [HttpPatch]
+        [HttpPatch("{id}")]
         public IActionResult UpdateDescription(int id, string description)
         {
             var item = _context.Items.Find(id);
@@ -67,7 +68,7 @@ namespace WishList.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             var item = _context.Items.Find(id);

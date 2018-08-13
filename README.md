@@ -49,6 +49,15 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] Add a `route` attribute with a value of `string.empty` and `ApiController` attribute to the `CelestialObjectController`.
   - [ ] Create a new private field of type `ApplicationDbContext` named `_context`.
   - [ ] Create a constructor that accepts a parameter of type `ApplicationDbContext` and sets the `_context` field using the provided parameter.
+- [ ] Create all `Get` methods
+  - [ ] Create a new method `GetById` that accepts a parameter of type `int` named `id`. This method should have an `HttpGet` attribute with a value of `"{id}"`. This method should return an `Ok` with a value of the `CelestialObject` who's `Id` property matches the `id` parameter.
+  - [ ] `GetById` should return `NotFound` there is no `CelestialObject` with an `Id` property that matches the parameter.
+  - [ ] `GetById` should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObject` is the current `CelestialObject`.
+  - [ ] Create a new method `GetByName` that accepts a parameter of type `string` named `name`. This method should have an `HttpGet` attribute with a value of `"{name}"`. This method should return an `Ok` with a value of the `CelestialObject` who's `Name` property matches the `name` parameter.
+  - [ ] `GetByName` should return `NotFound` there is no `CelestialObject` with an `Name` property that matches the `name` parameter.
+  - [ ] `GetByName` should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObject` is the current `CelestialObject`.
+  - [ ] Create a new method `GetAll` with no parameters. This method should have an `HttpGet` attribute. This method should return `Ok` with a value of all `CelestialObjects`s.
+  - [ ] `GetAll` should also set the `Satellites` property for each `CelestialObject` returned (as we've done in the last two `Get` methods).
 	
 ## What Now?
 

@@ -34,9 +34,15 @@ If you would rather use something other than Visual Studio
 __Note:__ this isn't the only way to accomplish this, however; this is what the project's tests are expecting. Implementing this in a different way will likely result in being marked as incomplete / incorrect.
 
 - [ ] Adding Middleware/Configuration to `Startup.cs`
-	- [ ] In the `ConfigureServices` method call `AddMvc` to add support for MVC middleware.
-    - [ ] In the `Configure` method remove the `app.Run` entirely and replace it with a call to `UseMvc` on `app`.
-    - [ ] In the `ConfigureServices` method call `AddDbContext<ApplicationDbContext>` on `services` with the argument `options => options.UseInMemoryDatabase("StarChart")` to point `EntityFramework` to the application's `DbContext`. (Note: You will need to add a `using` directive for `StartChart.Data`)
+  - [ ] In the `ConfigureServices` method call `AddMvc` to add support for MVC middleware.
+  - [ ] In the `Configure` method remove the `app.Run` entirely and replace it with a call to `UseMvc` on `app`.
+  - [ ] In the `ConfigureServices` method call `AddDbContext<ApplicationDbContext>` on `services` with the argument `options => options.UseInMemoryDatabase("StarChart")` to point `EntityFramework` to the application's `DbContext`. (Note: You will need to add a `using` directive for `StartChart.Data`)
+- [ ] Create `CelestialObject` Model
+  - [ ] Create a new class `CelestialObject` in the `Models` directory
+  - [ ] Create a new property of type `string` named `Name`. This property should have the `Required` attribute. (Note: you will need to add a `using` directive for `Systems.ComponentModel.DataAnnotations`)
+  - [ ] Create a new property of type `CelestialObject` named `OrbitedObject`.
+  - [ ] Create a new property of type `List<CelestialObject>` named `Satellites`. This property should have the `NotMapped` attribute. (Note: you will need to add using directives for `System.Collections.Generic` and `System.ComponentModels.DataAnnotations.Schema`)
+  - [ ] Create a new property of type `TimeSpan` named `OrbitalPeriod`.
 	
 ## What Now?
 

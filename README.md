@@ -39,6 +39,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] In the `ConfigureServices` method call `AddDbContext<ApplicationDbContext>` on `services` with the argument `options => options.UseInMemoryDatabase("StarChart")` to point `EntityFramework` to the application's `DbContext`. (Note: You will need to add a `using` directive for `StartChart.Data`)
 - [ ] Create `CelestialObject` Model
   - [ ] Create a new class `CelestialObject` in the `Models` directory
+  - [ ] Create a new property of type `int` named `Id`.
   - [ ] Create a new property of type `string` named `Name`. This property should have the `Required` attribute. (Note: you will need to add a `using` directive for `Systems.ComponentModel.DataAnnotations`)
   - [ ] Create a new property of type `CelestialObject` named `OrbitedObject`.
   - [ ] Create a new property of type `List<CelestialObject>` named `Satellites`. This property should have the `NotMapped` attribute. (Note: you will need to add using directives for `System.Collections.Generic` and `System.ComponentModels.DataAnnotations.Schema`)

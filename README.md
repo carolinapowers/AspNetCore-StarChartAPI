@@ -43,6 +43,11 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] Create a new property of type `CelestialObject` named `OrbitedObject`.
   - [ ] Create a new property of type `List<CelestialObject>` named `Satellites`. This property should have the `NotMapped` attribute. (Note: you will need to add using directives for `System.Collections.Generic` and `System.ComponentModels.DataAnnotations.Schema`)
   - [ ] Create a new property of type `TimeSpan` named `OrbitalPeriod`.
+- [ ] Create `CelestialObjectController` class
+  - [ ] Create a new class `CelestialObjectController` that inherits the `ControllerBase` class (Note: you will need to add a `using` directive for `Microsoft.AspNetCore.Mvc`)
+  - [ ] Add a `route` attribute with a value of `string.empty` and `ApiController` attribute to the `CelestialObjectController`.
+  - [ ] Create a new private field of type `ApplicationDbContext` named `_context`.
+  - [ ] Create a constructor that accepts a parameter of type `ApplicationDbContext` and sets the `_context` field using the provided parameter.
 	
 ## What Now?
 

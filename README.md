@@ -58,6 +58,19 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] `GetByName` should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObject` is the current `CelestialObject`.
   - [ ] Create a new method `GetAll` with no parameters. This method should have an `HttpGet` attribute. This method should return `Ok` with a value of all `CelestialObjects`s.
   - [ ] `GetAll` should also set the `Satellites` property for each `CelestialObject` returned (as we've done in the last two `Get` methods).
+- [ ] Create all remaining methods
+  - [ ] Create a new method `Create` that accepts a parameter of type `[FromBody]CelestialObject`. This method should have an `HttpPost` attribute. This method should return a `CreatedAtRoute` with the arguments `"GetById"`, a new `object` with an `id` of the `CelestialObject`'s `Id` , and the newly created `CelestialObject`.
+  - [ ] `Create` should check if the `ModelState` is valid, if not it should return a `BadRequest`.
+  - [ ] If the `ModelState` is valid, `Create` should add the provided `CelestialObject` to the `CelestialObjects` `DbSet` then `SaveChanges`.
+  - [ ] Create a new method `Update` that accepts a parameter of type `int` named `id` and a parameter of type `CelestialObject`. This method should have the `HttpPut` attribute with a value of `"{id}"`. This method should return `NoContent`.
+  - [ ] `Update` should locate the `CelestialObject` with an `Id` that matches the provided `int` parameter. If no match is found return `NotFound`.
+  - [ ] If a match is found set it's `Name`, `OrbitalPeriod`, `OrbitedObject`, and `Satellites` properties based on the provided `CelestialObject` parameter. Call `Update` on the `CelestialObjects` `DbSet` with an argument of the updated `CelestialObject`, and then call `SaveChanges`.
+  - [ ] Create a new method `UpdateName` that accepts a parameter of type `int` named `id` and a parameter of type `string`. This method should have the `HttpPatch` attribute with an argument of `"{id}"`. This method should return `NoContent`.
+  - [ ] `UpdateName` should locate the `CelestialObject` with an `Id` that matches the provided `int` parameter. If no match is found return `NotFound`.
+  - [ ] If a match is found set it's `Name` property to the provided `string` parameter. Then call `Update` on the `CelestialObjects` `DbSet` with an argument of the updated `CelestialObject`, and then call `SaveChanges`.
+  - [ ] Create a new method `Delete` that accepts a parameter of type `int` named `id`. This method should have the `HttpDelete` attribute with an argument of `"{id}"`. This method should return `NoContent`.
+  - [ ] `Delete` should get a `List` of all `CelestialObject`s who either have an `Id` or `OrbitedObject` with an `Id` that matches the provided parameter. If there are no matches it should return `NotFound`.
+  - [ ] If there are matching `CelestialObject`s call `RemoveRange` on the `CelestialObjects` `DbSet` with an argument of the list of matching `CelestialObject`s. Then call `SaveChanges`.
 	
 ## What Now?
 

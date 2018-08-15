@@ -24,10 +24,11 @@ If you would rather use something other than Visual Studio
 # Features you will implement
 
 - Configuring MVC and EntityFramework
-- Retrieving data from the database
-- Submitting data to the database
-- Updating existing data
-- Remove data from the database
+- Create a web service that provides access to data
+- Actions to retrieve data from the database
+- Action to Submit data to the database
+- Actions to Update existing data
+- Action to remove data from the database
 
 ## Tasks necessary to complete implementation:
 

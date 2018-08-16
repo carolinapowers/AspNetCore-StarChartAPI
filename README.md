@@ -76,9 +76,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
     - This method should have a return type of `IActionResult` .
     - This method should accept a parameter of type `[FromBody]CelestialObject`. 
     - This method should have an `HttpPost` attribute. 
-    - This method should check if the `ModelState` is valid
-      - if not it should return a `BadRequest`.
-      - If so the `ModelState` is valid, `Create` should add the provided `CelestialObject` to the `CelestialObjects` `DbSet` then `SaveChanges`.
+    - This method should add the provided `CelestialObject` to the `CelestialObjects` `DbSet` then `SaveChanges`.
     - This method should return a `CreatedAtRoute` with the arguments `"GetById"`, a new `object` with an `id` of the `CelestialObject`'s `Id` , and the newly created `CelestialObject`. (Note: You will need to add a `using` directive for `StarChart.Models`)
   - [ ] Create the `Update` method
     - This method should have a return type of `IActionResult` .

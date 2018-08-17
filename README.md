@@ -55,7 +55,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] Create a new method `GetById` 
     - This method should have a return type of `IActionResult` 
     - This method should accept a parameter of type `int` named `id`. 
-    - This method should have an `HttpGet` attribute with a value of `"{id}"`. 
+    - This method should have an `HttpGet` attribute with an value of `"{id:int}"` and the `Name` property set to `"GetById"`. 
     - This method should return `NotFound` there is no `CelestialObject` with an `Id` property that matches the parameter.
     - This method should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObject` is the current `CelestialObject`.
     - This method should return an `Ok` with a value of the `CelestialObject` who's `Id` property matches the `id` parameter.

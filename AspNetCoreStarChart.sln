@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StartChart", "StarChart\StartChart.csproj", "{EA4FA3F9-CA5C-464B-86AF-5BE032812674}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarChart", "StarChart\StarChart.csproj", "{EA4FA3F9-CA5C-464B-86AF-5BE032812674}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarChartTests", "StarChartTests\StarChartTests.csproj", "{358ABF4C-8485-41EE-B995-DE35C43AD160}"
 EndProject

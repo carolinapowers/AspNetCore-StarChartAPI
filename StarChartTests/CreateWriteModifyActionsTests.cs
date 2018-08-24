@@ -41,12 +41,62 @@ namespace StarChartTests
 
             var method = controller.GetMethod("Create");
             Assert.True(method != null, "`CelestialObjectController` does not contain a `Create` action that accepts a `CelestialObject` parameter.");
-            var postAttribute = method.GetCustomAttributes(typeof(HttpPostAttribute), false).FirstOrDefault();
+            var postAttribute = method.GetCustomAttributes(typeof(HttpPostAttribute), false).FirstOrDefault() as HttpPostAttribute;
             Assert.True(postAttribute != null, "`CelestialObjectController`'s `Create` action was found, but does not have an `HttpPost` attribute.");
             var okResults = method.Invoke(celestialController, new object[] { item }) as CreatedAtRouteResult;
             Assert.True(okResults != null, "`CelestialObjectController`'s `Create` action did not return a `CreatedAtRoute` with the new `CelestialObject`'s `Id` and the new `CelestialObject`.");
             var results = context.Find(model, 1);
             Assert.True(model.GetProperty("Name").GetValue(results) == model.GetProperty("Name").GetValue(item), "`CelestialObjectController`'s `Create` action did not add the provided `CelestialObject` to `_context.CelestialObjects` (Don't forget to call `SaveChanges` after adding it!).");
+        }
+
+        [Fact(DisplayName = "Create Update Action @create-update-action")]
+        public void CreateUpdateActionTest()
+        {
+            var filePath = ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "StarChart" + Path.DirectorySeparatorChar + "Controllers" + Path.DirectorySeparatorChar + "CelestialObjectController.cs";
+            Assert.True(File.Exists(filePath), "`CelestialObjectController.cs` was not found in the `Controllers` directory.");
+
+            var controller = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                              from type in assembly.GetTypes()
+                              where type.FullName == "StarChart.Controllers.CelestialObjectController"
+                              select type).FirstOrDefault();
+            Assert.True(controller != null, "A `public` class `CelestialObjectController` was not found in the `StarChart.Controllers` namespace.");
+
+            var model = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                         from type in assembly.GetTypes()
+                         where type.FullName == "StarChart.Models.CelestialObject"
+                         select type).FirstOrDefault();
+
+            var item = Activator.CreateInstance(model);
+            model.GetProperty("Id").SetValue(item, 1);
+            model.GetProperty("Name").SetValue(item, "Sun");
+            var item2 = Activator.CreateInstance(model);
+            model.GetProperty("Id").SetValue(item2, 2);
+            model.GetProperty("Name").SetValue(item2, "Earth");
+            var replacement = Activator.CreateInstance(model);
+            model.GetProperty("Id").SetValue(replacement, 1);
+            model.GetProperty("Name").SetValue(replacement, "Sol");
+            model.GetProperty("OrbitedObject").SetValue(item2, item);
+
+            var optionsBuilder = new DbContextOptionsBuilder();
+            optionsBuilder.UseInMemoryDatabase("TestUpdate");
+            var context = new ApplicationDbContext(optionsBuilder.Options);
+
+            var celestialController = Activator.CreateInstance(controller, new object[] { context });
+
+            context.Add(item);
+            context.Add(item2);
+            context.SaveChanges();
+
+            var method = controller.GetMethod("Update");
+            Assert.True(method != null, "`CelestialObjectController` does not contain a `Update` action that accepts an `int` and a `CelestialObject` parameter.");
+            var putAttribute = method.GetCustomAttributes(typeof(HttpPutAttribute), false).FirstOrDefault() as HttpPutAttribute;
+            Assert.True(putAttribute != null && putAttribute.Template == "{id}", "`CelestialObjectController`'s `Update` action was found, but does not have an `HttpPut` attribute with a template of {id}.");
+            var notFoundResults = method.Invoke(celestialController, new object[] { 3, replacement }) as NotFoundResult;
+            Assert.True(notFoundResults != null, "`CelestialObjectController`'s `Update` action did not return the `NotFound` when no `CelestialObject` with a matching `Id` was found.");
+            var okResults = method.Invoke(celestialController, new object[] { 1, replacement }) as NoContentResult;
+            Assert.True(okResults != null, "`CelestialObjectController`'s `Update` action did not return a `NoContent` with the new `CelestialObject`'s `Id` and the new `CelestialObject`.");
+            var results = context.Find(model, 1);
+            Assert.True(model.GetProperty("Name").GetValue(results) == model.GetProperty("Name").GetValue(replacement), "`CelestialObjectController`'s `Update` action did not update the matching `CelestialObject` in `_context.CelestialObjects` with the `CelestialObject` provided in the parameter (Don't forget to call `SaveChanges` after updating it!).");
         }
     }
 }

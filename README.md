@@ -36,26 +36,26 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
 
 - [ ] Adding Middleware/Configuration to `Startup.cs`
   - [ ] In the `ConfigureServices` method call the `AddMvc` method on `services` to add support for MVC middleware.
-  - [ ] In the `Configure` method remove the `app.Run` entirely and replace it with a call to `UseMvc` method on `app`.
-  - [ ] In the `ConfigureServices` method call `AddDbContext<ApplicationDbContext>` on `services` with the argument `options => options.UseInMemoryDatabase("StarChart")` to point `EntityFramework` to the application's `DbContext`. (Note: You will need to add a `using` directives for `StartChart.Data` and `Microsoft.EntityFrameworkCore`)
+  - [ ] In the `ConfigureServices` method call `AddDbContext<ApplicationDbContext>` on `services` with the argument `options => options.UseInMemoryDatabase("StarChart")` to point `EntityFramework` to the application's `DbContext`. (Note: You will need to add a `using` directives for `StarChart.Data` and `Microsoft.EntityFrameworkCore`)
+  - [ ] In the `Configure` method add a call to `UseMvc` method on `app`.
 - [ ] Create `CelestialObject` Model
-  - [ ] Create a new class `CelestialObject` in the `Models` directory
-  - [ ] Create a new property of type `int` named `Id`.
-  - [ ] Create a new property of type `string` named `Name`. This property should have the `Required` attribute. (Note: you will need to add a `using` directive for `Systems.ComponentModel.DataAnnotations`)
-  - [ ] Create a new property of type `CelestialObject` named `OrbitedObject`.
-  - [ ] Create a new property of type `List<CelestialObject>` named `Satellites`. This property should have the `NotMapped` attribute. (Note: you will need to add `using` directives for `System.Collections.Generic` and `System.ComponentModels.DataAnnotations.Schema`)
-  - [ ] Create a new property of type `TimeSpan` named `OrbitalPeriod`.
-  - [ ] Add a public property  of type `DbSet<CelestialObject>` named `CelestialObjects` to the `ApplicationDbContext` class. (Note: you will need to add a `using` directive for `StartChart.Models`)
+  - [ ] Create a new public class `CelestialObject` in the `Models` directory
+  - [ ] Create a new public property of type `int` named `Id`.
+  - [ ] Create a new public property of type `string` named `Name`. This property should have the `Required` attribute. (Note: you will need to add a `using` directive for `Systems.ComponentModel.DataAnnotations`)
+  - [ ] Create a new public property of type `CelestialObject` named `OrbitedObject`.
+  - [ ] Create a new public property of type `List<CelestialObject>` named `Satellites`. This property should have the `NotMapped` attribute. (Note: you will need to add `using` directives for `System.Collections.Generic` and `System.ComponentModels.DataAnnotations.Schema`)
+  - [ ] Create a new public property of type `TimeSpan` named `OrbitalPeriod`.
+  - [ ] In the `ApplicationDbContext` class create a new public property of type `DbSet<CelestialObject>` named `CelestialObjects`. (Note: you will need to add a `using` directive for `StarChart.Models`)
 - [ ] Create `CelestialObjectController` class
   - [ ] Create a new class `CelestialObjectController` that inherits the `ControllerBase` class (Note: you will need to add a `using` directive for `Microsoft.AspNetCore.Mvc`)
-  - [ ] Add a `Route` attribute with a value of `string.empty` and `ApiController` attribute to the `CelestialObjectController`.
-  - [ ] Create a new private readonly field of type `ApplicationDbContext` named `_context`. (Note: you will need to add a `using` directive for `StartChart.Data`)
+  - [ ] Add a `Route` attribute with a value of `""` and `ApiController` attribute to the `CelestialObjectController`.
+  - [ ] Create a new private readonly field of type `ApplicationDbContext` named `_context`. (Note: you will need to add a `using` directive for `StarChart.Data`)
   - [ ] Create a constructor that accepts a parameter of type `ApplicationDbContext` and sets the `_context` field using the provided parameter.
 - [ ] Create all `CelestialObjectController`'s Get actions
   - [ ] Create a new method `GetById` 
     - This method should have a return type of `IActionResult` 
     - This method should accept a parameter of type `int` named `id`. 
-    - This method should have an `HttpGet` attribute with a value of `"{id}"`. 
+    - This method should have an `HttpGet` attribute with an value of `"{id:int}"` and the `Name` property set to `"GetById"`. 
     - This method should return `NotFound` there is no `CelestialObject` with an `Id` property that matches the parameter.
     - This method should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObject` is the current `CelestialObject`.
     - This method should return an `Ok` with a value of the `CelestialObject` who's `Id` property matches the `id` parameter.
@@ -69,16 +69,15 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] Create the `GetAll` method
     - This method should have a return type of `IActionResult`.
     - This method should also set the `Satellites` property for each of the `CelestialObject`s returned.
-    - This method should have an `HttpGet` attribute. This method should return `Ok` with a value of all `CelestialObjects`s.
+    - This method should have an `HttpGet` attribute. 
+    - This method should return `Ok` with a value of all `CelestialObjects`s.
 - [ ] Create `CelestialObjectControllers`'s Post, Put, Patch, and Delete actions
   - [ ] Create the `Create` method
     - This method should have a return type of `IActionResult` .
     - This method should accept a parameter of type `[FromBody]CelestialObject`. 
     - This method should have an `HttpPost` attribute. 
-    - This method should check if the `ModelState` is valid
-      - if not it should return a `BadRequest`.
-      - If so the `ModelState` is valid, `Create` should add the provided `CelestialObject` to the `CelestialObjects` `DbSet` then `SaveChanges`.
-    - This method should return a `CreatedAtRoute` with the arguments `"GetById"`, a new `object` with an `id` of the `CelestialObject`'s `Id` , and the newly created `CelestialObject`. (Note: You will need to add a `using` directive for `StartChart.Models`)
+    - This method should add the provided `CelestialObject` to the `CelestialObjects` `DbSet` then `SaveChanges`.
+    - This method should return a `CreatedAtRoute` with the arguments `"GetById"`, a new `object` with an `id` of the `CelestialObject`'s `Id` , and the newly created `CelestialObject`. (Note: You will need to add a `using` directive for `StarChart.Models`)
   - [ ] Create the `Update` method
     - This method should have a return type of `IActionResult` .
     - This method should accept a parameter of type `int` named `id` and a parameter of type `CelestialObject`. 

@@ -39,7 +39,7 @@ namespace StarChartTests
                          where type.FullName == "StarChart.Controllers.CelestialObjectController"
                          select type).FirstOrDefault();
             Assert.True(controller != null, "A `public` class `CelestialObjectController` was not found in the `StarChart.Controllers` namespace.");
-            var routeAttribute = (RouteAttribute)controller.GetCustomAttributes(typeof(RouteAttribute), false).FirstOrDefault();
+            var routeAttribute = controller.GetCustomAttributes(typeof(RouteAttribute), false).FirstOrDefault() as RouteAttribute;
             Assert.True(routeAttribute != null && routeAttribute.Template == "", @"A `public` class `CelestialObjectController` was found, but didn't have a `Route` attribute with an argument of `""""`.");
             Assert.True(controller.GetCustomAttributes(typeof(ApiControllerAttribute), false).Any(), "A `public` class `CelestialObjectController` was found, but didn't have the `ApiController` attribute.");
         }

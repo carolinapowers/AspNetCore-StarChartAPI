@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using StarChart.Data;
 using Xunit;
 
@@ -49,6 +47,8 @@ namespace StarChartTests
 
             var method = controller.GetMethod("GetById", new Type[] { typeof(int) });
             Assert.True(method != null, "`CelestialObjectController` does not contain a `GetById` action that accepts an `int` parameter.");
+            var getAttribute = method.GetCustomAttributes(typeof(HttpGetAttribute), false).FirstOrDefault() as HttpGetAttribute;
+            Assert.True(getAttribute != null && getAttribute.Template == "{id:int}", "`CelestialObjectController`'s `GetById` action was found, but does not have an `HttpGet` attribute with a template of `{id:int}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3 }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `GetById` action did not return the `NotFound` when no `CelestialObject` with a matching `Id` was found.");
             var okResults = method.Invoke(celestialController, new object[] { 1 }) as OkObjectResult;
@@ -94,6 +94,8 @@ namespace StarChartTests
 
             var method = controller.GetMethod("GetByName", new Type[] { typeof(string) });
             Assert.True(method != null, "`CelestialObjectController` does not contain a `GetByName` action that accepts a `string` parameter.");
+            var getAttribute = method.GetCustomAttributes(typeof(HttpGetAttribute), false).FirstOrDefault() as HttpGetAttribute;
+            Assert.True(getAttribute != null && getAttribute.Template == "{name}", "`CelestialObjectController`'s `GetByName` action was found, but does not have an `HttpGet` attribute with a template of `{name}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { "Bob" }) as NotFoundResult;
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `GetByName` action did not return the `NotFound` when no `CelestialObject` with a matching `Name` was found.");
             var okResults = method.Invoke(celestialController, new object[] { "Sun" }) as OkObjectResult;
@@ -138,6 +140,8 @@ namespace StarChartTests
 
             var method = controller.GetMethod("GetAll", new Type[] { });
             Assert.True(method != null, "`CelestialObjectController` does not contain a `GetAll` action with no parameters.");
+            var getAttribute = method.GetCustomAttributes(typeof(HttpGetAttribute), false).FirstOrDefault() as HttpGetAttribute;
+            Assert.True(getAttribute != null, "`CelestialObjectController`'s `GetAll` action was found, but does not have an `HttpGet` attribute.");
             var okResults = method.Invoke(celestialController, new object[] { }) as OkObjectResult;
             Assert.True(okResults != null && okResults.Value != null, "`CelestialObjectController`'s `GetAll` action did not return an `Ok` with all `CelestialObject`s.");
             Assert.True((okResults.Value.GetType().ToString().Contains("System.Collections.Generic.List") || okResults.Value.GetType().ToString().Contains("Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable")) && okResults.Value.GetType().ToString().Contains("StarChart.Models.CelestialObject"), "`CelestialObjectController`'s `GetAll` action did not return an `Ok` with all `CelestialObject`s.");

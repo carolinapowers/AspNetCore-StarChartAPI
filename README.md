@@ -105,6 +105,6 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
 	
 ## What Now?
 
-You've completed the tasks of this project, if you want to continue working on this project there will be additional projects added to the ASP.NET Core path that continue where this project left off adding more advanced views and models, as well as providing and consuming data as a web service.
+You've completed the tasks of this project, if you want to continue working on this project some next steps to consider would be adding authentication to help secure the Web API, refactoring to allow binaries (two objects that orbit each other), impliment caching, etc.
 
 Otherwise now is a good time to continue on the ASP.NET Core path to expand your understanding of the ASP.NET Core framework or take a look at the Microsoft Azure for Developers path as Azure is a common choice for hosting, scaling, and expanding the functionality of ASP.NET Core applications.

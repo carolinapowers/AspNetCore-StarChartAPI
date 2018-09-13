@@ -45,6 +45,9 @@ namespace StarChartTests
             Assert.True(postAttribute != null, "`CelestialObjectController`'s `Create` action was found, but does not have an `HttpPost` attribute.");
             var okResults = method.Invoke(celestialController, new object[] { item }) as CreatedAtRouteResult;
             Assert.True(okResults != null, "`CelestialObjectController`'s `Create` action did not return a `CreatedAtRoute` with the new `CelestialObject`'s `Id` and the new `CelestialObject`.");
+            Assert.True(okResults.RouteName == "GetById", @"`CelestialObjectController`'s `Create` action's `CreatedAtRoute`'s first argument was not `""GetById""`.");
+            Assert.True(okResults.RouteValues.Count == 1 && okResults.RouteValues["id"] != null, "`CelestialObjectController`'s `Create` action's `CreateAtRoute`'s second argument didn't contain a RouteValue of `id`.");
+            Assert.True(okResults.Value.GetType() == model, "`CelestialObjectController`'s `Create` action's `CreatedAtRoute`'s third argument didn't contain the newly created `CelestialObject`.");
             var results = context.Find(model, 1);
             Assert.True(model.GetProperty("Name").GetValue(results) == model.GetProperty("Name").GetValue(item), "`CelestialObjectController`'s `Create` action did not add the provided `CelestialObject` to `_context.CelestialObjects` (Don't forget to call `SaveChanges` after adding it!).");
         }

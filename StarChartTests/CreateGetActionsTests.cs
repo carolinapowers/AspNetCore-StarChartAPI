@@ -100,7 +100,7 @@ namespace StarChartTests
             Assert.True(notFoundResults != null, "`CelestialObjectController`'s `GetByName` action did not return the `NotFound` when no `CelestialObject` with a matching `Name` was found.");
             var okResults = method.Invoke(celestialController, new object[] { "Sun" }) as OkObjectResult;
             Assert.True(okResults != null && okResults.Value != null, "`CelestialObjectController`'s `GetByName` action did not return an `Ok` with the `CelestialObject` that has a matching `Name` when one was found.");
-            Assert.True((okResults.Value.GetType().ToString().Contains("System.Collections.Generic.List") || okResults.Value.GetType().ToString().Contains("Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable"))  && okResults.Value.GetType().ToString().Contains("StarChart.Models.CelestialObject"), "`CelestialObjectController`'s `GetByName` action returned an `Ok` with a `CelestialObject`, however; the `Name` does not appear to match the one provided by the parameter.");
+            Assert.True((okResults.Value.GetType().ToString().Contains("System.Collections.Generic") || okResults.Value.GetType().ToString().Contains("Queryable"))  && okResults.Value.GetType().ToString().Contains("StarChart.Models.CelestialObject"), "`CelestialObjectController`'s `GetByName` action returned an `Ok` with a `CelestialObject`, however; the `Name` does not appear to match the one provided by the parameter.");
         }
 
         [Fact(DisplayName = "Create GetAll Action @create-getall-action")]
@@ -144,7 +144,7 @@ namespace StarChartTests
             Assert.True(getAttribute != null, "`CelestialObjectController`'s `GetAll` action was found, but does not have an `HttpGet` attribute.");
             var okResults = method.Invoke(celestialController, new object[] { }) as OkObjectResult;
             Assert.True(okResults != null && okResults.Value != null, "`CelestialObjectController`'s `GetAll` action did not return an `Ok` with all `CelestialObject`s.");
-            Assert.True((okResults.Value.GetType().ToString().Contains("System.Collections.Generic.List") || okResults.Value.GetType().ToString().Contains("Microsoft.EntityFrameworkCore.Query.Internal.EntityQueryable")) && okResults.Value.GetType().ToString().Contains("StarChart.Models.CelestialObject"), "`CelestialObjectController`'s `GetAll` action did not return an `Ok` with all `CelestialObject`s.");
+            Assert.True((okResults.Value.GetType().ToString().Contains("System.Collections.Generic") || okResults.Value.GetType().ToString().Contains("Queryable")) && okResults.Value.GetType().ToString().Contains("StarChart.Models.CelestialObject"), "`CelestialObjectController`'s `GetAll` action did not return an `Ok` with all `CelestialObject`s.");
         }
     }
 }

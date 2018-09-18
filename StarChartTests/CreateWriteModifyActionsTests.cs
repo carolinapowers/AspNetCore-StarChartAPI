@@ -41,6 +41,7 @@ namespace StarChartTests
 
             var method = controller.GetMethod("Create");
             Assert.True(method != null, "`CelestialObjectController` does not contain a `Create` action that accepts a `CelestialObject` parameter.");
+            Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `Create` action was found, but does not have a return type of `IActionResult`.");
             var postAttribute = method.GetCustomAttributes(typeof(HttpPostAttribute), false).FirstOrDefault() as HttpPostAttribute;
             Assert.True(postAttribute != null, "`CelestialObjectController`'s `Create` action was found, but does not have an `HttpPost` attribute.");
             var okResults = method.Invoke(celestialController, new object[] { item }) as CreatedAtRouteResult;
@@ -92,6 +93,7 @@ namespace StarChartTests
 
             var method = controller.GetMethod("Update");
             Assert.True(method != null, "`CelestialObjectController` does not contain a `Update` action that accepts an `int` and a `CelestialObject` parameter.");
+            Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `Update` action was found, but does not have a return type of `IActionResult`.");
             var putAttribute = method.GetCustomAttributes(typeof(HttpPutAttribute), false).FirstOrDefault() as HttpPutAttribute;
             Assert.True(putAttribute != null && putAttribute.Template == "{id}", "`CelestialObjectController`'s `Update` action was found, but does not have an `HttpPut` attribute with a template of `{id}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3, replacement }) as NotFoundResult;
@@ -138,6 +140,7 @@ namespace StarChartTests
 
             var method = controller.GetMethod("RenameObject", new Type[] { typeof(int), typeof(string) });
             Assert.True(method != null, "`CelestialObjectController` does not contain a `RenameObject` action that accepts an `int` and a `string` parameter.");
+            Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `RenameObject` action was found, but does not have a return type of `IActionResult`.");
             var patchAttribute = method.GetCustomAttributes(typeof(HttpPatchAttribute), false).FirstOrDefault() as HttpPatchAttribute;
             Assert.True(patchAttribute != null && patchAttribute.Template == "{id}/{name}", "`CelestialObjectController`'s `RenameObject` action was found, but does not have an `HttpPatch` attribute with a template of `{id}/{name}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3, "Bob" }) as NotFoundResult;
@@ -184,6 +187,7 @@ namespace StarChartTests
 
             var method = controller.GetMethod("Delete", new Type[] { typeof(int) });
             Assert.True(method != null, "`CelestialObjectController` does not contain a `Delete` action that accepts an `int` parameter.");
+            Assert.True(method.ReturnType == typeof(IActionResult), "`CelestialObjectController`'s `Delete` action was found, but does not have a return type of `IActionResult`.");
             var deleteAttribute = method.GetCustomAttributes(typeof(HttpDeleteAttribute), false).FirstOrDefault() as HttpDeleteAttribute;
             Assert.True(deleteAttribute != null && deleteAttribute.Template == "{id}", "`CelestialObjectController`'s `Delete` action was found, but does not have an `HttpDelete` attribute with a template of `{id}`.");
             var notFoundResults = method.Invoke(celestialController, new object[] { 3 }) as NotFoundResult;

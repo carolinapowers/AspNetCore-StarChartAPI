@@ -42,7 +42,7 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
   - [ ] Create a new public class `CelestialObject` in the `Models` directory
   - [ ] Create a new public property of type `int` named `Id`.
   - [ ] Create a new public property of type `string` named `Name`. This property should have the `Required` attribute. (Note: you will need to add a `using` directive for `Systems.ComponentModel.DataAnnotations`)
-  - [ ] Create a new public property of type `CelestialObject` named `OrbitedObject`.
+  - [ ] Create a new public property of type `int?` named `OrbitedObjectId`.
   - [ ] Create a new public property of type `List<CelestialObject>` named `Satellites`. This property should have the `NotMapped` attribute. (Note: you will need to add `using` directives for `System.Collections.Generic` and `System.ComponentModels.DataAnnotations.Schema`)
   - [ ] Create a new public property of type `TimeSpan` named `OrbitalPeriod`.
   - [ ] In the `ApplicationDbContext` class, located in the `Data` folder, create a new public property of type `DbSet<CelestialObject>` named `CelestialObjects`. (Note: you will need to add a `using` directive for `StarChart.Models`)
@@ -57,14 +57,14 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
     - This method should accept a parameter of type `int` named `id`. 
     - This method should have an `HttpGet` attribute with an value of `"{id:int}"` and the `Name` property set to `"GetById"`. 
     - This method should return `NotFound` there is no `CelestialObject` with an `Id` property that matches the parameter.
-    - This method should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObject` is the current `CelestialObject`.
+    - This method should also set the `Satellites` property to any `CelestialObjects` who's `OrbitedObjectId` is the current `CelestialObject`'s `Id`.
     - This method should return an `Ok` with a value of the `CelestialObject` who's `Id` property matches the `id` parameter.
   - [ ] Create the `GetByName` method
     - This method should have a return type of `IActionResult` 
     - This method should accept a parameter of type `string` named `name`. 
     - This method should have an `HttpGet` attribute with a value of `"{name}"`.
     - This method should return `NotFound` there is no `CelestialObject` with an `Name` property that matches the `name` parameter.
-    - This method should also set the `Satellites` property for each `CelestialObject` who's `OrbitedObject` is the current `CelestialObject`.
+    - This method should also set the `Satellites` property for each `CelestialObject` who's `OrbitedObjectId` is the current `CelestialObject`'s `Id`.
     - This method should return an `Ok` with a value of the list of `CelestialObject` who's `Name` property matches the `name` parameter.
   - [ ] Create the `GetAll` method
     - This method should have a return type of `IActionResult`.
@@ -87,12 +87,12 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
     - This method should have the `HttpPut` attribute with a value of `"{id}"`.
     - This method should locate the `CelestialObject` with an `Id` that matches the provided `int` parameter. 
       - If no match is found return `NotFound`.
-      - If a match is found set it's `Name`, `OrbitalPeriod`, `OrbitedObject`, and `Satellites` properties based on the provided `CelestialObject` parameter. Call `Update` on the `CelestialObjects` `DbSet` with an argument of the updated `CelestialObject`, and then call `SaveChanges`.
+      - If a match is found set it's `Name`, `OrbitalPeriod`, `OrbitedObjectId`, and `Satellites` properties based on the provided `CelestialObject` parameter. Call `Update` on the `CelestialObjects` `DbSet` with an argument of the updated `CelestialObject`, and then call `SaveChanges`.
     - This method should return `NoContent`.
   - [ ] Create the `RenameObject` method
     - This method should have a return type of `IActionResult`.
     - This method should accept a parameter of type `int` named `id` and a parameter of type `string` named `name`. 
-    - This method should have the `HttpPatch` attribute with an argument of `"{id}\{name}"`. 
+    - This method should have the `HttpPatch` attribute with an argument of `"{id}/{name}"`. 
     - This method should locate the `CelestialObject` with an `Id` that matches the provided `int` parameter. 
       - If no match is found return `NotFound`.
       - If a match is found set it's `Name` property to the provided `name` parameter. Then call `Update` on the `CelestialObjects` `DbSet` with an argument of the updated `CelestialObject`, and then call `SaveChanges`.
@@ -101,11 +101,11 @@ __Note:__ this isn't the only way to accomplish this, however; this is what the 
     - This method should have a return type of `IActionResult` 
     - This method should accept a parameter of type `int` named `id`. 
     - This method should have the `HttpDelete` attribute with an argument of `"{id}"`.
-    - This method should get a `List` of all `CelestialObject`s who either have an `Id` or `OrbitedObject` with an `Id` that matches the provided parameter. 
+    - This method should get a `List` of all `CelestialObject`s who either have an `Id` or `OrbitedObjectId`that matches the provided parameter. 
       - If there are no matches it should return `NotFound`.
       - If there are matching `CelestialObject`s call `RemoveRange` on the `CelestialObjects` `DbSet` with an argument of the list of matching `CelestialObject`s. Then call `SaveChanges`.
     - This method should return `NoContent`.
-	
+    
 ## What Now?
 
 You've completed the tasks of this project, if you want to continue working on this project some next steps to consider would be adding authentication to help secure the Web API, refactoring to allow binaries (two objects that orbit each other), impliment caching, etc.

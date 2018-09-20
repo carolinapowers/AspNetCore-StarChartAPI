@@ -33,7 +33,7 @@ namespace StarChartTests
             var item2 = Activator.CreateInstance(model);
             model.GetProperty("Id").SetValue(item2, 2);
             model.GetProperty("Name").SetValue(item2, "Earth");
-            model.GetProperty("OrbitedObject").SetValue(item2, item);
+            model.GetProperty("OrbitedObjectId").SetValue(item2, 1);
 
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseInMemoryDatabase("Test");
@@ -81,7 +81,7 @@ namespace StarChartTests
             var item2 = Activator.CreateInstance(model);
             model.GetProperty("Id").SetValue(item2, 2);
             model.GetProperty("Name").SetValue(item2, "Earth");
-            model.GetProperty("OrbitedObject").SetValue(item2, item);
+            model.GetProperty("OrbitedObjectId").SetValue(item2, 1);
 
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseInMemoryDatabase("Test2");
@@ -128,7 +128,7 @@ namespace StarChartTests
             var item2 = Activator.CreateInstance(model);
             model.GetProperty("Id").SetValue(item2, 2);
             model.GetProperty("Name").SetValue(item2, "Earth");
-            model.GetProperty("OrbitedObject").SetValue(item2, item);
+            model.GetProperty("OrbitedObjectId").SetValue(item2, 1);
 
             var optionsBuilder = new DbContextOptionsBuilder();
             optionsBuilder.UseInMemoryDatabase("Test3");

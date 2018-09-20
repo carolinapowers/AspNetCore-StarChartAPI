@@ -57,7 +57,7 @@ namespace StarChartTests
             Assert.True(nameProperty.GetCustomAttributes(typeof(RequiredAttribute),false).Any(), "A `public` property `Name` was found in `CelestialObject`, but does not have the `Required` attribute.");
         }
 
-        [Fact(DisplayName = "Add OrbitedObject Property @add-orbitedobject-property")]
+        [Fact(DisplayName = "Add OrbitedObjectId Property @add-orbitedobject-property")]
         public void AddOrbitedObjectPropertyTest()
         {
             var filePath = ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + ".." + Path.DirectorySeparatorChar + "StarChart" + Path.DirectorySeparatorChar + "Models" + Path.DirectorySeparatorChar + "CelestialObject.cs";
@@ -69,9 +69,9 @@ namespace StarChartTests
                          select type).FirstOrDefault();
             Assert.True(model != null, "A `public` class `CelestialObject` was not found in the `StarChart.Models` namespace.");
 
-            var property = model.GetProperty("OrbitedObject");
-            Assert.True(property != null, "A `public` property `OrbitedObject` was not found in the `CelestialObject` class.");
-            Assert.True(property.PropertyType == model, "A `public` property `OrbitedObject` was found in `CelestialObject`, but was not of type `CelestialObject`.");
+            var property = model.GetProperty("OrbitedObjectId");
+            Assert.True(property != null, "A `public` property `OrbitedObjectId` was not found in the `CelestialObject` class.");
+            Assert.True(property.PropertyType == typeof(int?), "A `public` property `OrbitedObjectId` was found in `CelestialObject`, but was not of type `int?`.");
         }
 
         [Fact(DisplayName = "Add Satellites Property @add-satellites-property")]

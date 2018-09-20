@@ -7,8 +7,6 @@ using StarChart.Data;
 using Moq;
 using Xunit;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using System.Collections.Generic;
 
 namespace StarChartTests
 {
